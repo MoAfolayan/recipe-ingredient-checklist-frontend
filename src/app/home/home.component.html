@@ -1,4 +1,4 @@
-<h1>Welcome: {{ currentUser.userName }}</h1>
+<h1>Welcome: {{ currentUser.name }}</h1>
 
 <div *ngIf="recipes">
     <h2>Recipes</h2>
@@ -22,8 +22,8 @@
         Check List
     </h3>
     <div *ngIf="activeCheckList">
-        <mat-selection-list>
-            <mat-list-option *ngFor="let checkListItem of activeCheckList.checkListItems">
+        <mat-selection-list #list>
+            <mat-list-option *ngFor="let checkListItem of activeCheckList.checkListItems" [selected]="checkListItem.checked">
                 {{checkListItem.ingredient.name}}
             </mat-list-option>
         </mat-selection-list>
