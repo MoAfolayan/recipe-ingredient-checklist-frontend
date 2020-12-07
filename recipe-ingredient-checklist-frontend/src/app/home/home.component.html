@@ -1,3 +1,20 @@
-<h1>You have successfully logged in</h1>
+<h1>Welcome: {{ currentUser.userName }}</h1>
+
+<div *ngIf="recipes">
+    <h2>Recipes</h2>
+    <ul *ngFor="let recipe of recipes"> 
+        <li>
+            {{recipe.name}} <br>
+            Description: {{recipe.description}} <br>
+            Ingredients
+            <ul *ngFor="let recipeIngredient of recipe.recipeIngredients"> 
+                <li>
+                    {{recipeIngredient.ingredient.name}} <br>
+                    Description: {{recipeIngredient.ingredient.description}}
+                </li>
+            </ul>
+        </li>
+    </ul>
+</div>
 
 <button (click)="logout()">Log out</button>
