@@ -6,6 +6,9 @@ import { RecipeService } from '../services/recipe/recipe.service';
 import { User } from '../models/user';
 import { Recipe } from '../models/recipe';
 import { CheckList } from '../models/checklist';
+import { MatListOption, MatSelectionListChange } from '@angular/material/list';
+import { SelectionModel } from '@angular/cdk/collections';
+import { CheckListItem } from '../models/checklistitem';
 
 @Component({
   selector: 'app-home',
@@ -17,6 +20,7 @@ export class HomeComponent implements OnInit {
   currentUser: User;
   recipes: Recipe[];
   activeCheckList: CheckList;
+  activeCheckListSelectedOptions: SelectionModel<MatListOption>;
 
   constructor(
     private authService: AuthService,
@@ -37,10 +41,39 @@ export class HomeComponent implements OnInit {
       );
   }
 
-  toggleCheckList(recipe: Recipe) {
+  showCheckList(recipe: Recipe) {
     this.checkListService.getActiveCheckList(recipe.id)
       .subscribe(
-        (data) => this.activeCheckList = data
+        (data) => { 
+          if (data) {
+            this.activeCheckList = data
+          } else {
+            this.checkListService.addNewCheckList(recipe)
+              .subscribe(
+                (data2) => {
+                  if (data2) {
+                    alert('New checkList created');
+                    this.activeCheckList = data
+                  } else {
+                    alert('Error creating new check list');
+                  }
+                }
+              );
+          }
+        }
+      );
+  }
+
+  onCheckListChange(change: MatSelectionListChange) {
+    console.log(change.option.value, change.option.selected);
+    var checkListItem: CheckListItem = {
+      id: change.option.value.id,
+      checked: change.option.selected
+    }
+
+    this.checkListService.updateCheckListItem(checkListItem)
+      .subscribe(
+        (data: CheckListItem) => this.activeCheckList.checkListItems[data.id].checked = data["checked"]
       );
   }
 

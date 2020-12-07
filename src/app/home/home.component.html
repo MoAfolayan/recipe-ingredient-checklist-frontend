@@ -5,7 +5,7 @@
 
     <div class="grid" *ngFor="let recipe of recipes">
         <div>
-            {{recipe.name}} <button (click)="toggleCheckList(recipe)">Check List</button> <br>
+            {{recipe.name}} <button (click)="showCheckList(recipe)">Check List</button> <br>
             Description: {{recipe.description}} <br>
             Ingredients
             <ul *ngFor="let recipeIngredient of recipe.recipeIngredients">
@@ -22,8 +22,8 @@
         Check List
     </h3>
     <div *ngIf="activeCheckList">
-        <mat-selection-list #list>
-            <mat-list-option *ngFor="let checkListItem of activeCheckList.checkListItems" [selected]="checkListItem.checked">
+        <mat-selection-list #list (selectionChange)="onCheckListChange($event)">
+            <mat-list-option *ngFor="let checkListItem of activeCheckList.checkListItems" [selected]="checkListItem.checked" [value]="checkListItem">
                 {{checkListItem.ingredient.name}}
             </mat-list-option>
         </mat-selection-list>
