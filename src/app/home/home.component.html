@@ -22,7 +22,7 @@
         Check List
     </h3>
     <div *ngIf="activeCheckList">
-        <mat-selection-list #list (selectionChange)="onCheckListChange($event)">
+        <mat-selection-list #list (selectionChange)="onCheckListChange($event, list)">
             <mat-list-option *ngFor="let checkListItem of activeCheckList.checkListItems" [selected]="checkListItem.checked" [value]="checkListItem">
                 {{checkListItem.ingredient.name}}
             </mat-list-option>

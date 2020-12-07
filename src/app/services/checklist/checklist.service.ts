@@ -21,6 +21,13 @@ export class ChecklistService {
     return this.http.post<CheckListItem>(environment['apiBaseUrl'] + '/checklist/updatechecklistitemstatus/', checkListItem);
   }
 
+  deactivateCheckList(checkListId: number) {
+    const data = {
+      'id': checkListId
+    };
+    return this.http.post(environment['apiBaseUrl'] + '/checklist/deactivate', data);
+  }
+
   addNewCheckList(recipe: Recipe) {
     const data  = {
       'recipeId' : recipe.id,

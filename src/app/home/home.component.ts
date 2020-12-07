@@ -64,8 +64,22 @@ export class HomeComponent implements OnInit {
       );
   }
 
-  onCheckListChange(change: MatSelectionListChange) {
+  onCheckListChange(change: MatSelectionListChange, list) {
     console.log(change.option.value, change.option.selected);
+
+    if (list.selectedOptions.selected.length == list._keyManager._items.length) {
+      console.log('true');
+      this.checkListService.deactivateCheckList(change.option.value.checkListId)
+        .subscribe(
+          (data) => { 
+            if (data["deactivated"] == true) {
+              alert('Check list complete');
+              this.activeCheckList = null;
+            }
+          }
+        );
+    }
+
     var checkListItem: CheckListItem = {
       id: change.option.value.id,
       checked: change.option.selected
