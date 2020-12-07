@@ -11,6 +11,9 @@ import { HomeComponent } from './home/home.component';
 import { AuthGuard } from './auth/guards/auth.guard';
 import { TokenIntercept } from './auth/tokenintercept';
 import { AuthService } from './auth/services/auth.service';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { MatListModule } from '@angular/material/list';
 
 @NgModule({
   declarations: [
@@ -26,6 +29,9 @@ import { AuthService } from './auth/services/auth.service';
     RouterModule,
     ReactiveFormsModule,
     FormsModule,
+    MatGridListModule,
+    NoopAnimationsModule,
+    MatListModule
   ],
   providers: [
     { provide: APP_BASE_HREF, useValue: '/'},

@@ -2,19 +2,34 @@
 
 <div *ngIf="recipes">
     <h2>Recipes</h2>
-    <ul *ngFor="let recipe of recipes"> 
-        <li>
-            {{recipe.name}} <br>
+
+    <div class="grid" *ngFor="let recipe of recipes">
+        <div>
+            {{recipe.name}} <button (click)="toggleCheckList(recipe)">Check List</button> <br>
             Description: {{recipe.description}} <br>
             Ingredients
-            <ul *ngFor="let recipeIngredient of recipe.recipeIngredients"> 
+            <ul *ngFor="let recipeIngredient of recipe.recipeIngredients">
                 <li>
                     {{recipeIngredient.ingredient.name}} <br>
                     Description: {{recipeIngredient.ingredient.description}}
                 </li>
             </ul>
-        </li>
-    </ul>
+        </div>
+        
+    </div>
+    <br>
+    <h3>
+        Check List
+    </h3>
+    <div *ngIf="activeCheckList">
+        <mat-selection-list>
+            <mat-list-option *ngFor="let checkListItem of activeCheckList.checkListItems">
+                {{checkListItem.ingredient.name}}
+            </mat-list-option>
+        </mat-selection-list>
+    </div>
 </div>
 
-<button (click)="logout()">Log out</button>
+<button (click)="logout()">
+    Log out
+</button>

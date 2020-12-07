@@ -5,6 +5,7 @@ import { UserService } from '../services/user/user.service';
 import { RecipeService } from '../services/recipe/recipe.service';
 import { User } from '../models/user';
 import { Recipe } from '../models/recipe';
+import { CheckList } from '../models/checklist';
 
 @Component({
   selector: 'app-home',
@@ -15,12 +16,13 @@ export class HomeComponent implements OnInit {
 
   currentUser: User;
   recipes: Recipe[];
+  activeCheckList: CheckList;
 
   constructor(
     private authService: AuthService,
     private checkListService: ChecklistService,
     private userService: UserService,
-    private recipeService: RecipeService,
+    private recipeService: RecipeService
   ) { }
 
   ngOnInit(): void {
@@ -32,6 +34,13 @@ export class HomeComponent implements OnInit {
     this.recipeService.getRecipes()
       .subscribe(
         (data) => this.recipes = data["recipes"]
+      );
+  }
+
+  toggleCheckList(recipe: Recipe) {
+    this.checkListService.getActiveCheckList(recipe.id)
+      .subscribe(
+        (data) => this.activeCheckList = data
       );
   }
 

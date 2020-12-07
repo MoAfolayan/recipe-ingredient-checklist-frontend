@@ -17,5 +17,4 @@ export class RecipeService {
   getRecipes() {
     return this.http.get(environment['apiBaseUrl'] + '/recipes');
   }
-  
 }
