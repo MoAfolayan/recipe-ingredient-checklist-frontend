@@ -14,6 +14,7 @@ import { AuthService } from './auth/services/auth.service';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatListModule } from '@angular/material/list';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { MatListModule } from '@angular/material/list';
     FormsModule,
     MatGridListModule,
     NoopAnimationsModule,
-    MatListModule
+    MatListModule,
+    MatButtonModule
   ],
   providers: [
     { provide: APP_BASE_HREF, useValue: '/'},
