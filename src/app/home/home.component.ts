@@ -32,12 +32,16 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.userService.getUser()
       .subscribe(
-        (data: User) => this.currentUser = { ...data }
+        (data: User) => this.currentUser = { ...data },
+        err => console.error(`Error: ${err}`),
+        () => console.log('User retrieved')
       );
 
     this.recipeService.getRecipes()
       .subscribe(
-        (data) => this.recipes = data["recipes"]
+        data => this.recipes = data["recipes"],
+        err => console.error(`Error: ${err}`),
+        () => console.log('Recipe retrieved')
       );
   }
 
