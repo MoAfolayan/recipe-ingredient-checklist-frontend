@@ -25,7 +25,6 @@ import { MatButtonModule } from '@angular/material/button';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    BrowserModule,
     HttpClientModule,
     RouterModule,
     ReactiveFormsModule,
@@ -36,7 +35,7 @@ import { MatButtonModule } from '@angular/material/button';
     MatButtonModule
   ],
   providers: [
-    { provide: APP_BASE_HREF, useValue: '/'},
+    { provide: APP_BASE_HREF, useValue: '/' },
     AuthGuard,
     {
       provide: HTTP_INTERCEPTORS,

@@ -29,8 +29,8 @@ export class ChecklistService {
   }
 
   addNewCheckList(recipe: Recipe) {
-    const data  = {
-      'recipeId' : recipe.id,
+    const data = {
+      'recipeId': recipe.id,
     };
     return this.http.put(environment['apiBaseUrl'] + '/checklist', data);
   }

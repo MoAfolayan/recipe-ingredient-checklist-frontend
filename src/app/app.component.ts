@@ -22,9 +22,9 @@ export class AppComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
-    this.loggedIn$  =  this.authService.isLoggedIn;
+    this.loggedIn$ = this.authService.isLoggedIn;
 
-    this.isLoggedIn_subscription  = this.authService.isLoggedIn.subscribe(
+    this.isLoggedIn_subscription = this.authService.isLoggedIn.subscribe(
       (status) => {
         this.setBodyClassName(status);
 
@@ -39,8 +39,8 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    if (this.isLoggedIn_subscription) { 
-      this.isLoggedIn_subscription.unsubscribe(); 
+    if (this.isLoggedIn_subscription) {
+      this.isLoggedIn_subscription.unsubscribe();
     }
   }
 
