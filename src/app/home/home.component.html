@@ -1,26 +1,28 @@
 <div class="contain">
 
-    <h1>Welcome: {{ currentUser.name }}</h1>
+    <div *ngIf="currentUser$ | async as currentUser">
+        <h1>Welcome: {{ currentUser.name }}</h1>
+    </div>
 
-    <div *ngIf="recipes">
+    <div *ngIf="currentUserRecipes$ | async as currentUserRecipes">
         <h2>Recipes</h2>
 
-        <div class="grid" *ngFor="let recipe of recipes">
+        <div class="grid" *ngFor="let recipe of currentUserRecipes.recipes">
             <div>
                 <b>
                     {{recipe.name}}
                 </b>
-                
+
                 <button mat-raised-button color="primary" (click)="showCheckList(recipe)">
                     Check List
-                </button> 
+                </button>
                 <br>
-                Description: {{recipe.description}} 
+                Description: {{recipe.description}}
                 <br>
                 Ingredients
                 <ul *ngFor="let recipeIngredient of recipe.recipeIngredients">
                     <li>
-                        {{recipeIngredient.ingredient.name}} 
+                        {{recipeIngredient.ingredient.name}}
                         <br>
                         Description: {{recipeIngredient.ingredient.description}}
                     </li>
@@ -33,7 +35,8 @@
         </h3>
         <div *ngIf="activeCheckList">
             <mat-selection-list #list (selectionChange)="onCheckListChange($event, list)">
-                <mat-list-option *ngFor="let checkListItem of activeCheckList.checkListItems" [selected]="checkListItem.checked" [value]="checkListItem">
+                <mat-list-option *ngFor="let checkListItem of activeCheckList.checkListItems"
+                    [selected]="checkListItem.checked" [value]="checkListItem">
                     {{checkListItem.ingredient.name}}
                 </mat-list-option>
             </mat-selection-list>
@@ -41,6 +44,7 @@
 
     </div>
     <br>
+
     <button mat-raised-button color="primary" (click)="logout()">
         Log out
     </button>

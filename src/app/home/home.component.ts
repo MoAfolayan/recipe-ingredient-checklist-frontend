@@ -1,23 +1,33 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { AuthService } from '../auth/services/auth.service';
 import { ChecklistService } from '../services/checklist/checklist.service';
 import { UserService } from '../services/user/user.service';
 import { RecipeService } from '../services/recipe/recipe.service';
-import { User } from '../models/user';
 import { Recipe } from '../models/recipe';
 import { CheckList } from '../models/checklist';
 import { MatListOption, MatSelectionListChange } from '@angular/material/list';
 import { SelectionModel } from '@angular/cdk/collections';
 import { CheckListItem } from '../models/checklistitem';
+import { EMPTY, Observable } from 'rxjs';
+import { catchError } from 'rxjs/operators'
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent {
 
-  currentUser: User;
+  currentUser$ = this.userService.currentUser$
+    .pipe(
+      catchError(this.handleError)
+    );
+
+  currentUserRecipes$ = this.recipeService.currentUserRecipes$
+    .pipe(
+      catchError(this.handleError)
+    );
+
   recipes: Recipe[];
   activeCheckList: CheckList;
   activeCheckListSelectedOptions: SelectionModel<MatListOption>;
@@ -29,26 +39,15 @@ export class HomeComponent implements OnInit {
     private recipeService: RecipeService
   ) { }
 
-  ngOnInit(): void {
-    this.userService.getUser()
-      .subscribe(
-        (data: User) => this.currentUser = { ...data },
-        err => console.error(`Error: ${err}`),
-        () => console.log('User retrieved')
-      );
-
-    this.recipeService.getRecipes()
-      .subscribe(
-        data => this.recipes = data["recipes"],
-        err => console.error(`Error: ${err}`),
-        () => console.log('Recipe retrieved')
-      );
+  handleError(err: string): Observable<never> {
+    console.error(err);
+    return EMPTY;
   }
 
   showCheckList(recipe: Recipe) {
     this.checkListService.getActiveCheckList(recipe.id)
       .subscribe(
-        (data) => { 
+        (data) => {
           if (data) {
             this.activeCheckList = data
           } else {
@@ -75,7 +74,7 @@ export class HomeComponent implements OnInit {
       console.log('true');
       this.checkListService.deactivateCheckList(change.option.value.checkListId)
         .subscribe(
-          (data) => { 
+          (data) => {
             if (data["deactivated"] == true) {
               alert('Check list complete');
               this.activeCheckList = null;
@@ -84,7 +83,7 @@ export class HomeComponent implements OnInit {
         );
     }
 
-    var checkListItem: CheckListItem = {
+    let checkListItem: CheckListItem = {
       id: change.option.value.id,
       checked: change.option.selected
     }

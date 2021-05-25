@@ -11,11 +11,9 @@ import { AuthService } from '../auth/services/auth.service';
 export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
-
   processing: Boolean = false;
   error: Boolean = false;
-
-  checkField  = this.CheckRequiredField;
+  checkField = this.CheckRequiredField;
 
   constructor(
     private authService: AuthService,
@@ -30,16 +28,8 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  onSubmitButtonClicked() {
-    this.error  = false;
-    this.processing  = false;
-    if (this.loginForm.valid) {
-      this.login();
-    }
-  }
-
   private login() {
-    this.processing  = true;
+    this.processing = true;
     this.authService.login(this.loginForm.value).then(
       data => {
         if (data) {
@@ -57,24 +47,32 @@ export class LoginComponent implements OnInit {
 
   private handleLoginSuccess() {
     this.processing = false;
-    this.error  = false;
+    this.error = false;
     this.router.navigate(['/home']);
   }
 
   private handleLoginError() {
     this.processing = false;
-    this.error  = true;
+    this.error = true;
   }
 
   private initForm() {
     this.loginForm = new FormGroup({
-      username: new FormControl('', [ Validators.required]),
+      username: new FormControl('', [Validators.required]),
       password: new FormControl('', Validators.required),
     });
   }
 
   private CheckRequiredField(field: AbstractControl): boolean {
     return (!field.valid && (field.dirty || field.touched));
+  }
+
+  onSubmitButtonClicked() {
+    this.error = false;
+    this.processing = false;
+    if (this.loginForm.valid) {
+      this.login();
+    }
   }
 
 }

@@ -8,13 +8,9 @@ import { User } from 'src/app/models/user';
 })
 export class UserService {
 
-  currentUser: User;
-
   constructor(
     private http: HttpClient
   ) { }
 
-  getUser() {
-    return this.http.get<User>(environment['apiBaseUrl'] + '/user');
-  }
+  currentUser$ = this.http.get<User>(environment['apiBaseUrl'] + '/user');
 }
