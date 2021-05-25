@@ -10,11 +10,6 @@ import { AuthService } from '../auth/services/auth.service';
 })
 export class LoginComponent implements OnInit {
 
-  loginForm: FormGroup;
-  processing: Boolean = false;
-  error: Boolean = false;
-  checkField = this.CheckRequiredField;
-
   constructor(
     private authService: AuthService,
     private router: Router,
@@ -27,6 +22,11 @@ export class LoginComponent implements OnInit {
       this.initForm();
     }
   }
+
+  private loginForm: FormGroup;
+  private processing: Boolean = false;
+  private error: Boolean = false;
+  private checkField = this.CheckRequiredField;
 
   private login() {
     this.processing = true;
@@ -67,7 +67,7 @@ export class LoginComponent implements OnInit {
     return (!field.valid && (field.dirty || field.touched));
   }
 
-  onSubmitButtonClicked() {
+  private onSubmitButtonClicked() {
     this.error = false;
     this.processing = false;
     if (this.loginForm.valid) {

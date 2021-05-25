@@ -5,8 +5,7 @@ import { UserService } from '../services/user/user.service';
 import { RecipeService } from '../services/recipe/recipe.service';
 import { Recipe } from '../models/recipe';
 import { CheckList } from '../models/checklist';
-import { MatListOption, MatSelectionListChange } from '@angular/material/list';
-import { SelectionModel } from '@angular/cdk/collections';
+import { MatSelectionListChange } from '@angular/material/list';
 import { CheckListItem } from '../models/checklistitem';
 import { EMPTY, Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators'
@@ -18,20 +17,6 @@ import { catchError } from 'rxjs/operators'
 })
 export class HomeComponent {
 
-  currentUser$ = this.userService.currentUser$
-    .pipe(
-      catchError(this.handleError)
-    );
-
-  currentUserRecipes$ = this.recipeService.currentUserRecipes$
-    .pipe(
-      catchError(this.handleError)
-    );
-
-  recipes: Recipe[];
-  activeCheckList: CheckList;
-  activeCheckListSelectedOptions: SelectionModel<MatListOption>;
-
   constructor(
     private authService: AuthService,
     private checkListService: ChecklistService,
@@ -39,12 +24,24 @@ export class HomeComponent {
     private recipeService: RecipeService
   ) { }
 
-  handleError(err: string): Observable<never> {
+  private activeCheckList: CheckList;
+
+  private currentUser$ = this.userService.currentUser$
+    .pipe(
+      catchError(this.handleError)
+    );
+
+  private currentUserRecipes$ = this.recipeService.currentUserRecipes$
+    .pipe(
+      catchError(this.handleError)
+    );
+
+  private handleError(err: string): Observable<never> {
     console.error(err);
     return EMPTY;
   }
 
-  showCheckList(recipe: Recipe) {
+  private showCheckList(recipe: Recipe) {
     this.checkListService.getActiveCheckList(recipe.id)
       .subscribe(
         (data) => {
@@ -67,7 +64,7 @@ export class HomeComponent {
       );
   }
 
-  onCheckListChange(change: MatSelectionListChange, list) {
+  private onCheckListChange(change: MatSelectionListChange, list) {
     console.log(change.option.value, change.option.selected);
 
     if (list.selectedOptions.selected.length == list._keyManager._items.length) {
@@ -94,7 +91,7 @@ export class HomeComponent {
       );
   }
 
-  logout() {
+  private logout() {
     this.authService.logout();
   }
 

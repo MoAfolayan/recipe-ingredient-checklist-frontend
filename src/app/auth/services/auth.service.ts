@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { LoginModel } from '../models/login.model';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +11,6 @@ export class AuthService {
   isLoggedIn = new BehaviorSubject(false);
 
   private token: string = null;
-  private userLoginData: LoginModel = null;
 
   constructor(
     private http: HttpClient,
@@ -25,7 +23,7 @@ export class AuthService {
     localStorage.setItem('token', this.token);
   }
 
-  resolveToken(): boolean {
+  private resolveToken(): boolean {
     this.token = localStorage.getItem('token');
     this.isLoggedIn.next(this.token ? true : false);
     return this.token ? true : false;
@@ -65,14 +63,9 @@ export class AuthService {
     }
   }
 
-  clearData(): void {
-    this.userLoginData = null;
+  private clearData(): void {
     this.token = null;
     localStorage.clear();
-  }
-
-  getUserData(): LoginModel {
-    return this.userLoginData;
   }
 
 }
