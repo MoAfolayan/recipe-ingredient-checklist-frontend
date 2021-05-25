@@ -23,10 +23,10 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  private loginForm: FormGroup;
-  private processing: Boolean = false;
-  private error: Boolean = false;
-  private checkField = this.CheckRequiredField;
+  loginForm: FormGroup;
+  error: Boolean = false;
+  checkField = this.CheckRequiredField;
+  processing: Boolean = false;
 
   private login() {
     this.processing = true;
@@ -67,7 +67,7 @@ export class LoginComponent implements OnInit {
     return (!field.valid && (field.dirty || field.touched));
   }
 
-  private onSubmitButtonClicked() {
+  onSubmitButtonClicked() {
     this.error = false;
     this.processing = false;
     if (this.loginForm.valid) {

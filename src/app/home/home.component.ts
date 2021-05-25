@@ -26,12 +26,12 @@ export class HomeComponent {
 
   private activeCheckList: CheckList;
 
-  private currentUser$ = this.userService.currentUser$
+  currentUser$ = this.userService.currentUser$
     .pipe(
       catchError(this.handleError)
     );
 
-  private currentUserRecipes$ = this.recipeService.currentUserRecipes$
+  currentUserRecipes$ = this.recipeService.currentUserRecipes$
     .pipe(
       catchError(this.handleError)
     );
@@ -41,7 +41,7 @@ export class HomeComponent {
     return EMPTY;
   }
 
-  private showCheckList(recipe: Recipe) {
+  showCheckList(recipe: Recipe) {
     this.checkListService.getActiveCheckList(recipe.id)
       .subscribe(
         (data) => {
@@ -64,7 +64,7 @@ export class HomeComponent {
       );
   }
 
-  private onCheckListChange(change: MatSelectionListChange, list) {
+  onCheckListChange(change: MatSelectionListChange, list) {
     console.log(change.option.value, change.option.selected);
 
     if (list.selectedOptions.selected.length == list._keyManager._items.length) {
@@ -91,7 +91,7 @@ export class HomeComponent {
       );
   }
 
-  private logout() {
+  logout() {
     this.authService.logout();
   }
 
